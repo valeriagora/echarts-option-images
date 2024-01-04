@@ -1,95 +1,101 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import { ReactECharts } from "@/components/ReactECharts";
+import styles from "./page.module.css";
+
+const seriesLabel = {
+  show: true,
+};
+const weatherIcons = {
+  Sunny:
+    "https://images.unsplash.com/photo-1704187508554-5f38dbbb3495?q=80&w=2784&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  Cloudy:
+    "https://images.unsplash.com/photo-1682685797769-481b48222adf?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  Showers:
+    "https://images.unsplash.com/photo-1704173423733-d01e3466645a?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+};
+const option = {
+  title: {
+    text: "Weather Statistics",
+  },
+  legend: {
+    data: ["City Alpha", "City Beta", "City Gamma"],
+  },
+  grid: {
+    left: 140,
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      saveAsImage: {},
+    },
+  },
+  xAxis: {
+    type: "value",
+    name: "Days",
+    axisLabel: {
+      formatter: "{value}",
+    },
+  },
+  yAxis: {
+    type: "category",
+    inverse: true,
+    data: ["Sunny", "Cloudy", "Showers"],
+    axisLabel: {
+      formatter: function (value: string) {
+        return "{" + value + "| }{value|" + value + "}";
+      },
+      margin: 20,
+      overflow: "break",
+      width: 60,
+      rich: {
+        value: {
+          lineHeight: 30,
+          align: "center",
+        },
+        Sunny: {
+          height: 40,
+          // height: 32,
+          padding: 10,
+          // width: 40,
+          align: "center",
+          backgroundColor: {
+            // width: 40,
+            image: weatherIcons.Sunny,
+          },
+        },
+        Cloudy: {
+          height: 40,
+          padding: 10,
+          align: "center",
+          backgroundColor: {
+            image: weatherIcons.Cloudy,
+          },
+        },
+        Showers: {
+          height: 40,
+          padding: 10,
+          align: "center",
+          backgroundColor: {
+            image: weatherIcons.Showers,
+          },
+        },
+      },
+    },
+  },
+  series: [
+    {
+      name: "City Alpha",
+      type: "bar",
+      data: [165, 170, 30],
+      label: seriesLabel,
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <ReactECharts option={option} />
     </main>
-  )
+  );
 }
