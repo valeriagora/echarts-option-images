@@ -14,8 +14,6 @@ const images = {
 };
 const renderWeather = function (param: any, api: any) {
   const point = api.coord([0, 2]);
-  console.log("p", point);
-
   return {
     type: "group",
     children: [
